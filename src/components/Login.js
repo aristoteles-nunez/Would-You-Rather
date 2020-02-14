@@ -12,9 +12,25 @@ class Login extends Component {
         return (
             <div>
                 Login page
+                <br />
+                Registered Users: 
+                <ul>
+                    {this.props.registeredUsers.map((user)=>(
+                        <li key={user.id}> {user.name} </li>
+                    ))}
+                </ul>
             </div>
         );
     }
 }
 
-export default connect()(Login);
+const mapStateToProps = ({users}) => ({
+    registeredUsers: Object.keys(users).map((userId)=>({
+        id: userId,
+        name: users[userId].name,
+        avatarURL: users[userId].avatarURL 
+    }))
+})
+
+
+export default connect(mapStateToProps)(Login);
